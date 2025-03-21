@@ -1,5 +1,6 @@
 # CO2 DATASCIENTEST Project
-# Prédiction des émissions de CO2 d'un Véhicule Léger - Déploiement du Project
+# Prédiction des émissions de CO2 d'un Véhicule Léger
+# Déploiement du Project
 # Pour DataScientest - Soutenance de projet - Parcours DevOps
 
 Ce projet vise à prédire les émissions de CO₂ (WLTP) des véhicules à partir de caractéristiques techniques telles que la masse, la cylindrée, la puissance, la consommation de carburant et le type de carburant. Plusieurs modèles de machine learning sont comparés (Random Forest, Régression Linéaire, KNN), avec et sans inclusion des informations sur les marques, et une optimisation via TPOT est réalisée.
@@ -22,7 +23,7 @@ L'application finale permet la prédiction des émissions de CO₂ (WLTP) d'un v
 - [Modèles et Données](#modèles-et-données)
 - [Téléchargement du Dataset](#téléchargement-du-dataset)
 - [Pré-processing et Concaténation des Datasets](#pré-processing-et-concaténation-des-datasets)
-- [Architecture
+- [Architecture](#architecture)
 - [Axes d'Amélioration](#axes-damélioration)
 - [Licence](#licence)
 - [Contributions](#contributions)
@@ -30,9 +31,12 @@ L'application finale permet la prédiction des émissions de CO₂ (WLTP) d'un v
 ## Présentation du Projet
 
 Face aux enjeux climatiques et aux régulations strictes sur les émissions de CO₂, il est crucial de développer des outils permettant d'estimer l'impact environnemental des véhicules. Ce projet a pour objectifs :
-- D'analyser les facteurs influençant les émissions de CO₂.
-- De développer et comparer plusieurs modèles de prédiction.
-- D'explorer des pistes d'optimisation et d'amélioration pour des futures évolutions.
+- de récupérer un dataset distant,
+- de réaliser le pré-processing nécessaire,
+- d'entraîner un modèle,
+- d'évaluer le modèle,
+- de déployer le nouveau modèle,
+- de surveiller les métrics
 
 ## Structure du Projet
 
@@ -69,7 +73,7 @@ Face aux enjeux climatiques et aux régulations strictes sur les émissions de C
 
 1. Cloner le dépôt :
 
-       git clone https://github.com/DataScientest-Studio/NOV24-BDS-CO2.git
+       git clone https://dagshub.com/tiffany.dalmais/OCT24_MLOPS_CO2.git
        cd NOV24-BDS-CO2
 
 2. Créer un environnement virtuel (optionnel, mais recommandé) :
@@ -81,6 +85,54 @@ Face aux enjeux climatiques et aux régulations strictes sur les émissions de C
 
        pip install -r requirements.txt
 
+4. Installer DVC :
+
+       python3 -m pip install --upgrade pip # Mise à jour de la bibliothèque des paquets Python
+       pip install dvc
+
+5. Installer MLflow et dagshub :
+
+       python3 -m pip install mlflow dagshub # Installation des deux applications
+
+
+6. Configurer l'authentification (optionnel mais utile pour éviter de ressaisir ses identifiants à chaque fois) : 
+       a. Ouvrir un terminal et créer/modifier le fichier ~/.netrc :
+
+       nano ~/.netrc
+
+    b. Ajouter les lignes suivantes au fichier : 
+
+       machine dagshub.com # Nom du serveur distant
+       login nom_utilisateur # Nom d'utilisateur
+       password token_dagshub # Token d'authentification
+
+    c. Enregistrer les modifications et quitter l'éditeur de texte : 
+
+       Ctrl+O, Enter, Ctrl+X
+
+    d. Sécuriser le fichier : 
+
+       chmod 600 ~/.netrc
+
+
+8. Exécuter la pipeline pour reproduire les étapes : 
+
+       dvc repro
+
+10. Gestion des commits et des push : 
+En cas de modification de la pipeline et/ou des scripts : 
+    a. Ajouter et committer les modifications (code, dvc.yaml, dvc.lock, etc.) :
+    
+        git add .
+        git commit -m "Description du commit"
+
+    b. Pousser le code vers le remote Git :
+    
+        git push origin main
+
+    c. Pousser les données volumineuses via DVC :
+
+        dvc push
        
 ## Utilisation
 
@@ -100,16 +152,9 @@ L'application s'ouvrira dans votre navigateur à l'adresse [http://localhost:850
 
 ## Téléchargement du Dataset
 
-Le dataset brut n'est pas inclus dans ce dépôt pour éviter de surcharger GitHub. Veuillez télécharger le dataset correspondant à l'année souhaitée et le placer dans le dossier `src_new/data` (après l'avoir renommé en `data.csv` si nécessaire).
-
-- **Année 2023 :**  
-  [Télécharger le dataset 2023](https://www.eea.europa.eu/en/datahub/datahubitem-view/fa8b1229-3db6-495d-b18e-9c9b3267c02b?activeAccordion=1094576)
-
-- **Année 2022 :**  
-  [Télécharger le dataset 2022](https://www.eea.europa.eu/en/datahub/datahubitem-view/fa8b1229-3db6-495d-b18e-9c9b3267c02b?activeAccordion=1094576%2C1091011)
-
-- **Année 2021 :**  
-  [Télécharger le dataset 2021](https://www.eea.europa.eu/en/datahub/datahubitem-view/fa8b1229-3db6-495d-b18e-9c9b3267c02b?activeAccordion=1094576%2C1091011%2C1086949)
+Le dataset se récupère automatiquement grâce au script 'recup_raw_data.py' qui permet de lancer une requête SQL afin de récupérer les informations nécessaire à l'entraînement de notre modèle. Ces informations sont contenus dans les colonnes : Year, Mk, Cn, M (kg), Ewltp (g/km), Ft, Ec (cm3), Ep (KW), Erwltp (g/km) et Fc. 
+Afin que le modèle soit toujours à jour concernant les nouveaux véhicules, nous vous conseillons d'automatiser le lancement de la Pipeline complète (commande : dvc repro) grâce à un Cron Job (commande : 0 0 1 */3 * /usr/local/bin/dvc repro). 
+Toutefois vous pouvez également lancer simplement le script 'recup_raw_data.py' depuis votre terminal afin de récupérer simplement le dataset.
 
 ## Pré-processing et Concaténation des Datasets
 
