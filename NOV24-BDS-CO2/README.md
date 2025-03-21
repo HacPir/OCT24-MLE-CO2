@@ -1,13 +1,13 @@
 # CO2 DATASCIENTEST Project
-## Prédiction des émissions de CO2 d'un Véhicule Léger
-## Déploiement du Project
-### Pour DataScientest - Soutenance de projet - Parcours DevOps
+### Prédiction des émissions de CO2 d'un Véhicule Léger - Déploiement du Project
+#### Pour DataScientest - Soutenance de projet - Parcours DevOps
+
 
 Ce projet vise à prédire les émissions de CO₂ (WLTP) des véhicules à partir de caractéristiques techniques telles que la masse, la cylindrée, la puissance, la consommation de carburant et le type de carburant. Plusieurs modèles de machine learning sont comparés (Random Forest, Régression Linéaire, KNN), avec et sans inclusion des informations sur les marques, et une optimisation via TPOT est réalisée.
 Ce projet vise à déployer une solution de Machine Learning dans le respect des règles du cycle de vie DevOps.
 
 <picture>
- <img alt="Cycle DevOps" src="https://browserstack.wpenginepowered.com/wp-content/uploads/2023/02/DevOps-Lifecycle.jpg" center>
+ <img align="center" alt="Cycle DevOps" src="https://browserstack.wpenginepowered.com/wp-content/uploads/2023/02/DevOps-Lifecycle.jpg">
 </picture>
 
 Ainsi nous vous présentons ce projet qui vise à automatiser la récupération d'un dataset, entraîner un modèle puis le mettre à disposition via une plateforme API. Notre solution permet également la supervision et le surveillance de toutes les phases de notre système. 
