@@ -5,14 +5,12 @@
 Ce projet vise à prédire les émissions de CO₂ (WLTP) des véhicules à partir de caractéristiques techniques telles que la masse, la cylindrée, la puissance, la consommation de carburant et le type de carburant. Plusieurs modèles de machine learning sont comparés (Random Forest, Régression Linéaire, KNN), avec et sans inclusion des informations sur les marques, et une optimisation via TPOT est réalisée.
 Ce projet vise à déployer une solution de Machine Learning dans le respect des règles du cycle de vie DevOps.
 <picture>
- <source media="(prefers-color-scheme: dark)" srcset="YOUR-DARKMODE-IMAGE">
- <source media="(prefers-color-scheme: light)" srcset="YOUR-LIGHTMODE-IMAGE">
- <img alt="Cycle DevOps" src="https://browserstack.wpenginepowered.com/wp-content/uploads/2023/02/DevOps-Lifecycle.jpg">
+ <img alt="Cycle DevOps" src="https://browserstack.wpenginepowered.com/wp-content/uploads/2023/02/DevOps-Lifecycle.jpg" center>
 </picture>
 
-Ainsi nous vous présentons ce projet qui vise à automatiser la récupération d'un dataset, entraîner un modèle, puis le mettre à disposition via une plateforme API. Notre solution permet également la supervision et le surveillance de toutes les phases de notre système. 
+Ainsi nous vous présentons ce projet qui vise à automatiser la récupération d'un dataset, entraîner un modèle puis le mettre à disposition via une plateforme API. Notre solution permet également la supervision et le surveillance de toutes les phases de notre système. 
 
-L'application finale permet la prédiction des émissions de CO₂ (WLTP) d'un véhicules à partir de caractéristiques techniques (masse, la cylindrée, la puissance, cylindrée, système de réduction des émissions, la consommation de carburant et le type de carburant). Nous proposons une étude où plusieurs modèles de Machine Learning peuvent être entraîné afin de comparer les résultats, soit les algorithmes de Forêt d'arbres décisionnels (Random Forest), Régression Linéaire et Méthode des k plus proches voisins (KNN).
+L'application finale permet la prédiction des émissions de CO₂ (WLTP) d'un véhicules à partir de caractéristiques techniques (masse, la cylindrée, la puissance, cylindrée, système de réduction des émissions, la consommation de carburant et le type de carburant). Nous proposons une étude où plusieurs modèles de Machine Learning peuvent être entraîné afin de comparer les résultats, soit les algorithmes de Forêt d'arbres décisionnels (Random Forest), Régression Linéaire et Méthode des K plus proches voisins (KNN).
 [avec et sans inclusion des informations sur les marques.]
 
 ## Table des matières
@@ -24,6 +22,7 @@ L'application finale permet la prédiction des émissions de CO₂ (WLTP) d'un v
 - [Modèles et Données](#modèles-et-données)
 - [Téléchargement du Dataset](#téléchargement-du-dataset)
 - [Pré-processing et Concaténation des Datasets](#pré-processing-et-concaténation-des-datasets)
+- [Architecture
 - [Axes d'Amélioration](#axes-damélioration)
 - [Licence](#licence)
 - [Contributions](#contributions)
@@ -126,6 +125,20 @@ Exécutez le script en ligne de commande :
        python concatenate_datasets.py
 
 Le fichier résultant, `DF2023-22-21_Concat_Finale_2.csv`, doit être placé dans le dossier `src_new/data`.
+
+## Architecture
+
+|     Application    | Framework |
+|-------------------:|-----------|
+|   Automatisation   | Cron Job  |
+|     Versionning    | DVC       |
+|      Repository    | DagsHub   |
+|   Contenarisation  | Docker    |
+| Suivi Entraînement | MLFlow    |
+|     Monitoring     | Prometheus|
+|  Tableau de bord   | Grafana   |
+|     Interface      | Streamlit |
+
 
 ## Axes d'Amélioration
 
