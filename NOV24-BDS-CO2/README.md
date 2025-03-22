@@ -43,7 +43,8 @@ Face aux enjeux climatiques et aux régulations strictes sur les émissions de C
 
 ## Structure du Projet
 
-  nov24_bds_co2
+```plaintext
+nov24_bds_co2
 ├── LICENSE
 ├── README.md
 ├── __pycache__
@@ -71,6 +72,7 @@ Face aux enjeux climatiques et aux régulations strictes sur les émissions de C
     ├── pre_processing.py
     ├── print_tree.py
     └── regression_analysis.py
+```
        
 ## Architecture
 
