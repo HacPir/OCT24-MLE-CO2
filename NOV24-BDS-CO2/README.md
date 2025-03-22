@@ -1,16 +1,15 @@
-# CO2 DATASCIENTEST Project
+# CO2 - DataScientest Project
 ### Prédiction des émissions de CO2 d'un Véhicule Léger - Déploiement du Project
 #### Pour DataScientest - Soutenance de projet - Parcours DevOps
 
 
-Ce projet vise à prédire les émissions de CO₂ (WLTP) des véhicules à partir de caractéristiques techniques telles que la masse, la cylindrée, la puissance, la consommation de carburant et le type de carburant. Plusieurs modèles de machine learning sont comparés (Random Forest, Régression Linéaire, KNN), avec et sans inclusion des informations sur les marques, et une optimisation via TPOT est réalisée.
-Ce projet vise à déployer une solution de Machine Learning dans le respect des règles du cycle de vie DevOps.
+Ce projet vise à déployer une solution de Machine Learning dans le respect des règles du cycle de vie DevOps. Nous vous expliquons ici l'ensemble des étapes à suivre afin de réaliser tout le parcours du jeu de données à l'utilisateur final.
 
 <picture>
  <img align="center" alt="Cycle DevOps" src="https://browserstack.wpenginepowered.com/wp-content/uploads/2023/02/DevOps-Lifecycle.jpg">
 </picture>
 
-Ainsi nous vous présentons ce projet qui vise à automatiser la récupération d'un dataset, entraîner un modèle puis le mettre à disposition via une plateforme API. Notre solution permet également la supervision et le surveillance de toutes les phases de notre système. 
+Nous vous présentons ce projet qui vise à automatiser la récupération d'un dataset, entraîner un modèle puis le mettre à disposition via une plateforme API. Notre solution permet également la supervision et le surveillance de toutes les phases de notre système. 
 
 L'application finale permet la prédiction des émissions de CO₂ (WLTP) d'un véhicules à partir de caractéristiques techniques (masse, la cylindrée, la puissance, cylindrée, système de réduction des émissions, la consommation de carburant et le type de carburant). Nous proposons une étude où plusieurs modèles de Machine Learning peuvent être entraîné afin de comparer les résultats, soit les algorithmes de Forêt d'arbres décisionnels (Random Forest), Régression Linéaire et Méthode des K plus proches voisins (KNN).
 [avec et sans inclusion des informations sur les marques.]
@@ -69,6 +68,22 @@ Face aux enjeux climatiques et aux régulations strictes sur les émissions de C
     ├── pre_processing.py
     ├── print_tree.py
     └── regression_analysis.py
+
+       
+## Architecture
+
+|     Application    | Framework |
+|-------------------:|-----------|
+|   Automatisation   | Cron Job  |
+|     Versionning    | DVC       |
+|      Repository    | DagsHub   |
+|   Contenarisation  | Docker    |
+| Suivi Entraînement | MLFlow    |
+|     Monitoring     | Prometheus|
+|  Tableau de bord   | Grafana   |
+|     Interface      | Streamlit |
+
+
 
 ## Installation
 
@@ -143,48 +158,25 @@ Pour lancer l'application Streamlit :
 
 L'application s'ouvrira dans votre navigateur à l'adresse [http://localhost:8501](http://localhost:8501).
 
-## Modèles et Données
-
-- Les modèles entraînés (.pkl) seront enregistrés dans le dossier `models/`.
-- Pour générer ces fichiers, exécutez le script `model.py` situé dans le dossier `src/`. Une fois lancé, les fichiers de modélisation seront automatiquement sauvegardés dans `models/`.
-- Le prétraitement des données est réalisé via le script `pre_processing.py`.
-- Les fichiers d'entrée et de sortie pour l'entraînement et l'évaluation se trouvent dans le dossier `data/`.
-
-
 ## Téléchargement du Dataset
 
-Le dataset se récupère automatiquement grâce au script 'recup_raw_data.py' qui permet de lancer une requête SQL afin de récupérer les informations nécessaire à l'entraînement de notre modèle. Ces informations sont contenus dans les colonnes : Year, Mk, Cn, M (kg), Ewltp (g/km), Ft, Ec (cm3), Ep (KW), Erwltp (g/km) et Fc. 
-Afin que le modèle soit toujours à jour concernant les nouveaux véhicules, nous vous conseillons d'automatiser le lancement de la Pipeline complète (commande : dvc repro) grâce à un Cron Job (commande : 0 0 1 */3 * /usr/local/bin/dvc repro). 
-Toutefois vous pouvez également lancer simplement le script 'recup_raw_data.py' depuis votre terminal afin de récupérer simplement le dataset.
+La récupération de notre dataset s'effectue au travers une requête SQL sur le serveur de `https://discodata.eea.europa.eu/` afin de récupérer les informations nécessaire à l'entraînement de notre modèle. Ces informations sont contenus dans les colonnes : Year, Mk, Cn, M (kg), Ewltp (g/km), Ft, Ec (cm3), Ep (KW), Erwltp (g/km) et Fc. Pour cette étape nous utilisons le script `recup_raw_data.py` situé dans le dossier `src/data/`. Un fichier est alors créé sous un nom horodaté soit par exemple `DF_Raw_20250321_095913.csv` (`DF_Raw_DATE_HEURE.csv`). Un fichier de métadonné au format JSON est également créé afin de sauvegarder le nom du fichier de sortie.
+Attention, le dataset en ligne a une fréquence de mise à jour annuel, si vous souhaiter télécharger la denière mise à jour  nous vous conseillons de consulter `https://discodata.eea.europa.eu/` en sélectionnant le serveur `CO2Emission`, puis la base `latest`.
 
-## Pré-processing et Concaténation des Datasets
 
-Le pré-processing a été effectué séparément pour chaque dataset des années 2023, 2022 et 2021.  
-Les fichiers pré-traités sont nommés :
-- `DF2023_Processed_2.csv`
-- `DF2022_Processed_2.csv`
-- `DF2021_Processed_2.csv`
+## Pré-processing
 
-Pour obtenir le dataset final, ces fichiers ont été concaténés à l'aide du script `concatenate_datasets.py`.  
-Exécutez le script en ligne de commande :
+Le prétraitement, communément appelé pré-processing, est réalisé via le script `preprocessing.py` situé dans le dossier `src/data/`. Un fichier de sortie est alors créé contenant le dataset réduit pour notre usage et l'entraînement de notre modèle. Il sera présent sous un nom de fichier formaté soit par exemple `DF_Raw_20250321_095913.csv` (`DF_Processed_DATE_HEURE.csv`), le fichier JSON de métadonné (`metadata.json`) est également modifié afin d'intégrer le nom du fichier prêt pour l'entraînement de notre modèle.
 
-       python concatenate_datasets.py
 
-Le fichier résultant, `DF2023-22-21_Concat_Finale_2.csv`, doit être placé dans le dossier `src_new/data`.
+## Données et Modèles
 
-## Architecture
+L'entraînement de notre modèle s'effectue grâce à l'algorithme RandomForest. Nous exécutons le script `modelisation.py` situé dans le dossier `src/models/`. Après l'entraînement, les fichiers de modélisation (.pkl) seront automatiquement sauvegardés dans `src/models/`.
 
-|     Application    | Framework |
-|-------------------:|-----------|
-|   Automatisation   | Cron Job  |
-|     Versionning    | DVC       |
-|      Repository    | DagsHub   |
-|   Contenarisation  | Docker    |
-| Suivi Entraînement | MLFlow    |
-|     Monitoring     | Prometheus|
-|  Tableau de bord   | Grafana   |
-|     Interface      | Streamlit |
 
+## Automatisation
+
+L'automatisation du cycle s'effectue grâce à un Cron Job (commande : 0 0 1 */3 * /usr/local/bin/dvc repro) ainsi le modèle est mis à jour tout les 3 mois permettant un ré-entraînement en intégrant le nouveau dataset disponible. , nous vous conseillons d'automatiser le lancement de la Pipeline complète (commande : dvc repro) . 
 
 ## Axes d'Amélioration
 
