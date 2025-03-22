@@ -7,7 +7,7 @@ Ce projet vise à déployer une solution de Machine Learning dans le respect des
 
 <div align="center">
   <picture>
-    <img alt="Cycle DevOps" src="https://browserstack.wpenginepowered.com/wp-content/uploads/2023/02/DevOps-Lifecycle.jpg">
+    <img alt="Cycle DevOps" src="https://browserstack.wpenginepowered.com/wp-content/uploads/2023/02/DevOps-Lifecycle.jpg" width="70%">
   </picture>
 </div>
 Nous vous présentons ce projet qui vise à automatiser la récupération d'un dataset, entraîner un modèle puis le mettre à disposition via une plateforme API. Notre solution permet également la supervision et le surveillance de toutes les phases de notre système. 
@@ -19,12 +19,12 @@ L'application finale permet la prédiction des émissions de CO₂ (WLTP) d'un v
 
 - [Présentation du Projet](#présentation-du-projet)
 - [Structure du Projet](#structure-du-projet)
+- [Architecture](#architecture)
 - [Installation](#installation)
 - [Utilisation](#utilisation)
-- [Modèles et Données](#modèles-et-données)
 - [Téléchargement du Dataset](#téléchargement-du-dataset)
 - [Pré-processing et Concaténation des Datasets](#pré-processing-et-concaténation-des-datasets)
-- [Architecture](#architecture)
+- [Modèles et Données](#modèles-et-données)
 - [Axes d'Amélioration](#axes-damélioration)
 - [Licence](#licence)
 - [Contributions](#contributions)
@@ -83,7 +83,6 @@ Face aux enjeux climatiques et aux régulations strictes sur les émissions de C
 |     Monitoring     | Prometheus|
 |  Tableau de bord   | Grafana   |
 |     Interface      | Streamlit |
-
 
 
 ## Installation
