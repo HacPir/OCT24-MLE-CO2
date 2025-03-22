@@ -10,7 +10,7 @@ Ce projet vise à déployer une solution de Machine Learning dans le respect des
     <img alt="Cycle DevOps" src="https://browserstack.wpenginepowered.com/wp-content/uploads/2023/02/DevOps-Lifecycle.jpg" width="40%">
   </picture>
 </div>
-
+</BR>
 Nous vous présentons ce projet qui vise à automatiser la récupération d'un dataset, entraîner un modèle puis le mettre à disposition via une plateforme API. Notre solution permet également la supervision et le surveillance de toutes les phases de notre système. 
 
 L'application finale permet la prédiction des émissions de CO₂ (WLTP) d'un véhicules à partir de caractéristiques techniques (masse, la cylindrée, la puissance, cylindrée, système de réduction des émissions, la consommation de carburant et le type de carburant). Nous proposons une étude où plusieurs modèles de Machine Learning peuvent être entraîné afin de comparer les résultats, soit les algorithmes de Forêt d'arbres décisionnels (Random Forest), Régression Linéaire et Méthode des K plus proches voisins (KNN).
@@ -163,26 +163,26 @@ L'application s'ouvrira dans votre navigateur à l'adresse [http://localhost:850
 
 ## Téléchargement du Dataset
 
-La récupération de notre dataset s'effectue au travers une requête SQL sur le serveur de `https://discodata.eea.europa.eu/` afin de récupérer les informations nécessaire à l'entraînement de notre modèle. 
-Ces informations sont contenus dans les colonnes : Year, Mk, Cn, M (kg), Ewltp (g/km), Ft, Ec (cm3), Ep (KW), Erwltp (g/km) et Fc. 
-Pour cette étape nous utilisons le script `recup_raw_data.py` situé dans le dossier `src/data/`. 
-Un fichier est alors créé sous un nom horodaté soit par exemple `DF_Raw_20250321_095913.csv` (`DF_Raw_DATE_HEURE.csv`). 
-Un fichier de métadonné au format JSON est également créé afin de sauvegarder le nom du fichier de sortie.
-
+La récupération de notre dataset s'effectue au travers une requête SQL sur le serveur de `https://discodata.eea.europa.eu/` afin de récupérer les informations nécessaire à l'entraînement de notre modèle. </BR>
+Ces informations sont contenus dans les colonnes : Year, Mk, Cn, M (kg), Ewltp (g/km), Ft, Ec (cm3), Ep (KW), Erwltp (g/km) et Fc. </BR>
+Pour cette étape nous utilisons le script `recup_raw_data.py` situé dans le dossier `src/data/`. </BR>
+Un fichier est alors créé sous un nom horodaté soit par exemple `DF_Raw_20250321_095913.csv` (`DF_Raw_DATE_HEURE.csv`). </BR>
+Un fichier de métadonné au format JSON est également créé afin de sauvegarder le nom du fichier de sortie.</BR>
+</BR>
 Attention, le dataset en ligne a une fréquence de mise à jour annuel, si vous souhaiter télécharger la denière mise à jour  nous vous conseillons de consulter `https://discodata.eea.europa.eu/` en sélectionnant le serveur `CO2Emission`, puis la base `latest`.
 
 
 ## Pré-processing
 
-Le prétraitement, communément appelé pré-processing, est réalisé via le script `preprocessing.py` situé dans le dossier `src/data/`. 
-Un fichier de sortie est alors créé contenant le dataset réduit pour notre usage et l'entraînement de notre modèle. 
+Le prétraitement, communément appelé pré-processing, est réalisé via le script `preprocessing.py` situé dans le dossier `src/data/`. </BR>
+Un fichier de sortie est alors créé contenant le dataset réduit pour notre usage et l'entraînement de notre modèle. </BR>
 Il sera présent sous un nom de fichier formaté soit par exemple `DF_Raw_20250321_095913.csv` (`DF_Processed_DATE_HEURE.csv`), le fichier JSON de métadonné (`metadata.json`) est également modifié afin d'intégrer le nom du fichier prêt pour l'entraînement de notre modèle.
 
 
 ## Modèles et Données
 
-L'entraînement de notre modèle s'effectue grâce à l'algorithme RandomForest. 
-Nous exécutons le script `modelisation.py` situé dans le dossier `src/models/`. 
+L'entraînement de notre modèle s'effectue grâce à l'algorithme RandomForest. </BR>
+Nous exécutons le script `modelisation.py` situé dans le dossier `src/models/`. </BR>
 Après l'entraînement, les fichiers de modélisation (.pkl) seront automatiquement sauvegardés dans `src/models/`.
 
 
