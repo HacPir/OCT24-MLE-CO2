@@ -163,18 +163,27 @@ L'application s'ouvrira dans votre navigateur à l'adresse [http://localhost:850
 
 ## Téléchargement du Dataset
 
-La récupération de notre dataset s'effectue au travers une requête SQL sur le serveur de `https://discodata.eea.europa.eu/` afin de récupérer les informations nécessaire à l'entraînement de notre modèle. Ces informations sont contenus dans les colonnes : Year, Mk, Cn, M (kg), Ewltp (g/km), Ft, Ec (cm3), Ep (KW), Erwltp (g/km) et Fc. Pour cette étape nous utilisons le script `recup_raw_data.py` situé dans le dossier `src/data/`. Un fichier est alors créé sous un nom horodaté soit par exemple `DF_Raw_20250321_095913.csv` (`DF_Raw_DATE_HEURE.csv`). Un fichier de métadonné au format JSON est également créé afin de sauvegarder le nom du fichier de sortie.
+La récupération de notre dataset s'effectue au travers une requête SQL sur le serveur de `https://discodata.eea.europa.eu/` afin de récupérer les informations nécessaire à l'entraînement de notre modèle. 
+Ces informations sont contenus dans les colonnes : Year, Mk, Cn, M (kg), Ewltp (g/km), Ft, Ec (cm3), Ep (KW), Erwltp (g/km) et Fc. 
+Pour cette étape nous utilisons le script `recup_raw_data.py` situé dans le dossier `src/data/`. 
+Un fichier est alors créé sous un nom horodaté soit par exemple `DF_Raw_20250321_095913.csv` (`DF_Raw_DATE_HEURE.csv`). 
+Un fichier de métadonné au format JSON est également créé afin de sauvegarder le nom du fichier de sortie.
+
 Attention, le dataset en ligne a une fréquence de mise à jour annuel, si vous souhaiter télécharger la denière mise à jour  nous vous conseillons de consulter `https://discodata.eea.europa.eu/` en sélectionnant le serveur `CO2Emission`, puis la base `latest`.
 
 
 ## Pré-processing
 
-Le prétraitement, communément appelé pré-processing, est réalisé via le script `preprocessing.py` situé dans le dossier `src/data/`. Un fichier de sortie est alors créé contenant le dataset réduit pour notre usage et l'entraînement de notre modèle. Il sera présent sous un nom de fichier formaté soit par exemple `DF_Raw_20250321_095913.csv` (`DF_Processed_DATE_HEURE.csv`), le fichier JSON de métadonné (`metadata.json`) est également modifié afin d'intégrer le nom du fichier prêt pour l'entraînement de notre modèle.
+Le prétraitement, communément appelé pré-processing, est réalisé via le script `preprocessing.py` situé dans le dossier `src/data/`. 
+Un fichier de sortie est alors créé contenant le dataset réduit pour notre usage et l'entraînement de notre modèle. 
+Il sera présent sous un nom de fichier formaté soit par exemple `DF_Raw_20250321_095913.csv` (`DF_Processed_DATE_HEURE.csv`), le fichier JSON de métadonné (`metadata.json`) est également modifié afin d'intégrer le nom du fichier prêt pour l'entraînement de notre modèle.
 
 
 ## Modèles et Données
 
-L'entraînement de notre modèle s'effectue grâce à l'algorithme RandomForest. Nous exécutons le script `modelisation.py` situé dans le dossier `src/models/`. Après l'entraînement, les fichiers de modélisation (.pkl) seront automatiquement sauvegardés dans `src/models/`.
+L'entraînement de notre modèle s'effectue grâce à l'algorithme RandomForest. 
+Nous exécutons le script `modelisation.py` situé dans le dossier `src/models/`. 
+Après l'entraînement, les fichiers de modélisation (.pkl) seront automatiquement sauvegardés dans `src/models/`.
 
 
 ## Automatisation
