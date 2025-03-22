@@ -7,7 +7,7 @@ Ce projet vise à déployer une solution de Machine Learning dans le respect des
 
 <div align="center">
   <picture>
-    <img alt="Architecture" src="./images/archi.png" width="40%">
+    <img alt="Cycle DevOps" src="https://browserstack.wpenginepowered.com/wp-content/uploads/2023/02/DevOps-Lifecycle.jpg" width="40%">
   </picture>
 </div>
 </BR>
