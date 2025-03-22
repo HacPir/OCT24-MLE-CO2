@@ -10,6 +10,7 @@ Ce projet vise à déployer une solution de Machine Learning dans le respect des
     <img alt="Cycle DevOps" src="https://browserstack.wpenginepowered.com/wp-content/uploads/2023/02/DevOps-Lifecycle.jpg" width="40%">
   </picture>
 </div>
+
 Nous vous présentons ce projet qui vise à automatiser la récupération d'un dataset, entraîner un modèle puis le mettre à disposition via une plateforme API. Notre solution permet également la supervision et le surveillance de toutes les phases de notre système. 
 
 L'application finale permet la prédiction des émissions de CO₂ (WLTP) d'un véhicules à partir de caractéristiques techniques (masse, la cylindrée, la puissance, cylindrée, système de réduction des émissions, la consommation de carburant et le type de carburant). Nous proposons une étude où plusieurs modèles de Machine Learning peuvent être entraîné afin de comparer les résultats, soit les algorithmes de Forêt d'arbres décisionnels (Random Forest), Régression Linéaire et Méthode des K plus proches voisins (KNN).
@@ -23,8 +24,9 @@ L'application finale permet la prédiction des émissions de CO₂ (WLTP) d'un v
 - [Installation](#installation)
 - [Utilisation](#utilisation)
 - [Téléchargement du Dataset](#téléchargement-du-dataset)
-- [Pré-processing et Concaténation des Datasets](#pré-processing-et-concaténation-des-datasets)
+- [Pré-processing](#pré-processing)
 - [Modèles et Données](#modèles-et-données)
+- [Automatisation](#automatisation)
 - [Axes d'Amélioration](#axes-damélioration)
 - [Licence](#licence)
 - [Contributions](#contributions)
@@ -169,7 +171,7 @@ Attention, le dataset en ligne a une fréquence de mise à jour annuel, si vous 
 Le prétraitement, communément appelé pré-processing, est réalisé via le script `preprocessing.py` situé dans le dossier `src/data/`. Un fichier de sortie est alors créé contenant le dataset réduit pour notre usage et l'entraînement de notre modèle. Il sera présent sous un nom de fichier formaté soit par exemple `DF_Raw_20250321_095913.csv` (`DF_Processed_DATE_HEURE.csv`), le fichier JSON de métadonné (`metadata.json`) est également modifié afin d'intégrer le nom du fichier prêt pour l'entraînement de notre modèle.
 
 
-## Données et Modèles
+## Modèles et Données
 
 L'entraînement de notre modèle s'effectue grâce à l'algorithme RandomForest. Nous exécutons le script `modelisation.py` situé dans le dossier `src/models/`. Après l'entraînement, les fichiers de modélisation (.pkl) seront automatiquement sauvegardés dans `src/models/`.
 
